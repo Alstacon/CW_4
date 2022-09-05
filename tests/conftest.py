@@ -1,7 +1,11 @@
+from unittest.mock import patch
+
 import pytest
 
 from project.config import TestingConfig
+from project.models import User
 from project.server import create_app
+from project.services import UsersService
 from project.setup.db import db as database
 
 
@@ -28,3 +32,5 @@ def db(app):
 def client(app, db):
     with app.test_client() as client:
         yield client
+
+

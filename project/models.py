@@ -1,4 +1,6 @@
+from marshmallow import Schema, fields
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from sqlalchemy.orm import relationship
 
 from project.setup.db import models
 
@@ -29,6 +31,8 @@ class Movie(models.Base):
     genre_id = Column(Integer, nullable=False)
     director_id = Column(Integer, nullable=False)
 
+    users = relationship("User")
+
 
 class User(models.Base):
     __tablename__ = 'user'
@@ -38,4 +42,31 @@ class User(models.Base):
     password = Column(String, nullable=False)
     name = Column(String, unique=True)
     surname = Column(String)
-    favorite_genre = Column(String)
+    favorite_genre = Column(Integer, ForeignKey('movie.id'))
+
+    genres = relationship("Movie")
+
+
+class UserSchema(Schema):
+    id = fields.Integer(primary_key=True)
+    email = fields.String()
+    password = fields.String()
+    name = fields.String()
+    surname = fields.String()
+    favorite_genre = fields.Integer()
+
+
+class Favorites(models.Base):
+    __tablename__ = 'favorites'
+
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False, )
+    movie_id = Column(Integer, ForeignKey("movie.id"), nullable=False, )
+
+    users = relationship("User")
+    movies = relationship("Movie")
+
+
+class FavoritesSchema(Schema):
+    id = fields.Integer(primary_key=True)
+    user_id = fields.Integer()
+    movie_id = fields.Integer()
