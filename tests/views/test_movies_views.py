@@ -75,7 +75,9 @@ class TestMoviesView:
             {
                 "id": movie_1.id,
                 "title": movie_1.title,
-                "description": movie_1.description,
+                'description': 'Desc',
+                'director': {'id': None, 'name': None},
+                'genre': {'id': None, 'name': None},
                 "trailer": movie_1.trailer,
                 "year": movie_1.year,
                 "rating": movie_1.rating,
@@ -85,7 +87,9 @@ class TestMoviesView:
             {
                 "id": movie_2.id,
                 "title": movie_2.title,
-                "description": movie_2.description,
+                'description': 'Desc',
+                'director': {'id': None, 'name': None},
+                'genre': {'id': None, 'name': None},
                 "trailer": movie_2.trailer,
                 "year": movie_2.year,
                 "rating": movie_2.rating,
@@ -95,7 +99,9 @@ class TestMoviesView:
             {
                 "id": movie_3.id,
                 "title": movie_3.title,
-                "description": movie_3.description,
+                'description': 'Desc',
+                'director': {'id': None, 'name': None},
+                'genre': {'id': None, 'name': None},
                 "trailer": movie_3.trailer,
                 "year": movie_3.year,
                 "rating": movie_3.rating,
