@@ -125,7 +125,9 @@ class TestMoviesView:
         assert response.json == {
             "id": movie_1.id,
             "title": movie_1.title,
-            "description": movie_1.description,
+            'description': 'Desc',
+            'director': {'id': None, 'name': None},
+            'genre': {'id': None, 'name': None},
             "trailer": movie_1.trailer,
             "year": movie_1.year,
             "rating": movie_1.rating,
