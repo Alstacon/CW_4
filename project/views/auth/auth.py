@@ -2,21 +2,23 @@ from flask import request, abort
 from flask_restx import Namespace, Resource
 
 from project.container import auth_service
+from project.setup.api.models import user
 
 api = Namespace('auth')
 
 
 @api.route('/login/')
 class AuthView(Resource):
+    @api.marshal_with(user, as_list=True, code=201, description='OK')
     def post(self):
+        """Login user"""
         data = request.json
-
 
         if None in data:
             abort(400)
 
         tokens = auth_service.generate_tokens(data)
-        return tokens, 201
+        return tokens
 
     def put(self):
         data = request.json
@@ -29,8 +31,10 @@ class AuthView(Resource):
 
 @api.route('/register/')
 class AuthView(Resource):
+    @api.marshal_with(user, as_list=True, code=201, description='OK')
     def post(self):
+        """Create new user in db"""
         data = request.json
         auth_service.create_user(data)
 
-        return '', 201
+        return ''

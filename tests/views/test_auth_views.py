@@ -18,10 +18,10 @@ class TestAuthView:
         db.session.commit()
         return user
 
-    def test_register_page(self, user_with_pass):
+    def test_register_page(self, client, user_with_pass):
         data = {"email": "email", "password": "password"}
         auth_service.create_user = MagicMock(return_value = user_with_pass)
-        response = requests.post('/register/')
+        response = client.post('/register/')
 
         assert response.status_code == 201
 
