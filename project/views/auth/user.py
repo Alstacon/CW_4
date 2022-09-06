@@ -23,7 +23,7 @@ class UserView(Resource):
         return "", 204
 
 
-@api.route('/password')
+@api.route('/password/')
 class UserPassChangeView(Resource):
     @auth_required
     def put(self, user):

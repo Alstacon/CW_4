@@ -1,9 +1,9 @@
+import json
 from unittest.mock import MagicMock
 
 import pytest
-import requests
 
-from project.container import auth_service, user_service
+from project.container import auth_service
 from project.models import User
 from project.tools.security import generate_password_hash, generate_tokens_func
 
@@ -11,22 +11,29 @@ from project.tools.security import generate_password_hash, generate_tokens_func
 class TestAuthView:
 
     @pytest.fixture
-    def user_with_pass(self, db):
-        user = User(email="email", password="Password")
-        user.password = generate_password_hash("Password")
-        db.session.add(user)
-        db.session.commit()
-        return user
+    def refresh_token(self):
+        token = generate_tokens_func(User(id=1, email="email", password="password"))
+        return token["refresh_token"]
 
     def test_register_page(self, client, user_with_pass):
         data = {"email": "email", "password": "password"}
-        auth_service.create_user = MagicMock(return_value = user_with_pass)
-        response = client.post('/register/')
+        auth_service.create_user = MagicMock(return_value=user_with_pass)
+        response = client.post('/auth/register/', data=json.dumps(data),
+                               headers={"Content-Type": "application/json"})
 
         assert response.status_code == 201
 
-    # def test_login_page(self, client):
-    #     data = {"email": "email", "password": "password"}
-    #     response = client.post('/login/', data=data)
-    #     auth_service.generate_tokens = MagicMock(return_value = {1: 1, 2: 2})
-    #     assert response.status_code == 201
+    def test_login_page(self, client):
+        data = {"email": "email", "password": "password"}
+        auth_service.generate_tokens = MagicMock(return_value={1: 1, 2: 2})
+        response = client.post('/auth/login/', data=json.dumps(data),
+                               headers={"Content-Type": "application/json"})
+
+        assert response.status_code == 201
+
+    def test_refresh_page(self, client, refresh_token):
+        data = {"refresh_token": refresh_token}
+        response = client.put('/auth/login/', data=json.dumps(data),
+                              headers={"Content-Type": "application/json"})
+
+        assert response.status_code == 201

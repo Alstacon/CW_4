@@ -4,8 +4,7 @@ import pytest
 
 from project.models import User
 from project.services import AuthService, UsersService
-from project.tools.security import generate_password_hash, compare_passwords, generate_tokens_func
-from project.container import auth_service
+from project.tools.security import generate_tokens_func
 
 
 
@@ -39,26 +38,23 @@ class TestAuthService:
         return tokens
 
 
-    # def test_generate_tokens(self, auth_service, users_service, tokens):
-    #     users_service.get_item = MagicMock(return_value=User(id=1, email="email", password="password"))
-    #     data = {
-    #         "id": 1,
-    #         "email": "email",
-    #         "password": "password",
-    #         "name": "name",
-    #         "surname": 'surname',
-    #         "favorite_genre": "favorite_genre"
-    #     }
-        # assert auth_service.generate_tokens(data)
-        # assert "access_token" in tokens
-        # assert "refresh_token" in tokens
+    def test_generate_tokens(self, auth_service, users_service, tokens, user_with_pass):
+        users_service.get_item = MagicMock(return_value = user_with_pass)
+        data = {
+            "id": 1,
+            "email": "email",
+            "password": "Password"
+        }
+        auth_service.generate_tokens(data, is_refresh=False)
+
+        assert "access_token" in tokens
+        assert "refresh_token" in tokens
 
 
     def test_approve_refresh_token(self, auth_service, tokens):
         new_tokens = auth_service.approve_refresh_token(tokens['refresh_token'])
         assert "access_token" in new_tokens
         assert "refresh_token" in new_tokens
-        assert new_tokens['refresh_token'] != tokens['refresh_token']
 
 
 

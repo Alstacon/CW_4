@@ -1,12 +1,7 @@
-from typing import Optional
-
-from flask import request
 from flask_restx import Namespace, Resource
 
-from project.container import favorites_service, movie_service
+from project.container import favorites_service
 from project.models import FavoritesSchema
-from project.setup.api.models import movie
-from project.setup.api.parsers import page_parser
 from project.tools.decorators import auth_required
 
 api = Namespace('favorites')

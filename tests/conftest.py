@@ -1,12 +1,12 @@
-from unittest.mock import patch
+from typing import Optional
 
 import pytest
 
 from project.config import TestingConfig
 from project.models import User
 from project.server import create_app
-from project.services import UsersService
 from project.setup.db import db as database
+from project.tools.security import generate_password_hash, generate_tokens_func
 
 
 @pytest.fixture
@@ -34,3 +34,34 @@ def client(app, db):
         yield client
 
 
+@pytest.fixture
+def user_with_pass(db):
+    user = User(email="email", password="Password")
+    user.password = generate_password_hash("Password")
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
+@pytest.fixture
+def create_auth_user():
+    _counter = 0
+
+    def wrapper(_id: Optional[int] = None, email: str = ''):
+        nonlocal _counter
+        if _id is None:
+            _id = _counter
+        if not email:
+            email = f'test_{_id}@mail.ru'
+        user = User(id=_id, email=email)
+        tokens = generate_tokens_func(user)
+        _counter += 1
+        return user, 'Bearer {access_token}'.format(**tokens)
+
+    return wrapper
+
+
+@pytest.fixture
+def token(db, create_auth_user):
+    _, token = create_auth_user(1, "email")
+    return token

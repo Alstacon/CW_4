@@ -34,6 +34,7 @@ class FavoritesDAO(BaseDAO[Favorites]):
             self._db_session.delete(ent)
             self._db_session.commit()
 
-    def get_by_user_id(self, user_id, page: Optional[int] = None):
+    def get_all_by_user_id(self, user_id, page: Optional[int] = None):
         favorites = self._db_session.query(Favorites).filter(Favorites.user_id == user_id).all()
         return favorites
+
