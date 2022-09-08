@@ -2,7 +2,7 @@ from flask import request, abort
 from flask_restx import Namespace, Resource
 
 from project.container import auth_service
-from project.setup.api.models import user
+from project.setup.api.models import user_model
 
 api = Namespace('auth')
 

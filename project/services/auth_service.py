@@ -19,8 +19,8 @@ class AuthService:
     def create_user(self, data):
         try:
             self.user_service.create_user(data)
-        except Exception as e:
-            return e
+        except:
+            return f"""User with email {data.get("email")} is already registered"""
 
     def generate_tokens(self, data, is_refresh=False):
         user = self.user_service.get_item(data.get("email"))

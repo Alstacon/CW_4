@@ -22,6 +22,16 @@ class UsersService:
         data['password'] = generate_password_hash(data.get('password'))
         return self.dao.create(data)
 
+    def add_to_favorites(self, movie_id, user_id):
+        return self.user_dao.add_to_favorites(movie_id, user_id)
+
+    def delete_from_favorites(self, movie_id, user_id):
+        return self.user_dao.delete_from_favorites(movie_id, user_id)
+
+    def get_favorites(self, user_id):
+        return self.user_dao.get_favorites(user_id)
+
+
     def update(self, user, data: dict):
         user = self.user_dao.get_by_email(user.email)
         if 'name' in data:

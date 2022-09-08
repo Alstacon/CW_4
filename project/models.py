@@ -2,7 +2,7 @@ from marshmallow import Schema, fields
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
-from project.setup.db import models
+from project.setup.db import models, db
 
 
 class Genre(models.Base):
@@ -10,11 +10,15 @@ class Genre(models.Base):
 
     name = Column(String(100), unique=True, nullable=False)
 
+    movies = db.relationship("Movie", back_populates='genre')
+
 
 class Director(models.Base):
     __tablename__ = 'director'
 
     name = Column(String(100), unique=True, nullable=False)
+
+    movies = db.relationship("Movie", back_populates='director')
 
 
 class Movie(models.Base):
@@ -28,9 +32,15 @@ class Movie(models.Base):
     genre_id = Column(Integer, ForeignKey(f'{Genre.__tablename__}.id'), nullable=False)
     director_id = Column(Integer, ForeignKey(f'{Director.__tablename__}.id'), nullable=False)
 
-    genre = relationship("Genre")
-    director = relationship("Director")
-    users = relationship("User")
+    genre = db.relationship("Genre", back_populates='movies')
+    director = db.relationship("Director", back_populates='movies')
+
+
+class Favorites(db.Model):
+    __tablename__ = 'favorites'
+
+    user_id = Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
+    movie_id = Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True, nullable=False)
 
 
 class User(models.Base):
@@ -40,29 +50,7 @@ class User(models.Base):
     password = Column(String, nullable=False)
     name = Column(String, unique=True)
     surname = Column(String)
-    favorite_genre = Column(Integer, ForeignKey(f'{Movie.__tablename__}.id'))
+    favorite_film = Column(Integer, ForeignKey(f'{Movie.__tablename__}.id'))
 
-    genres = relationship("Movie")
+    favorites = db.relationship("Movie", secondary='favorites', backref='user', cascade="all, delete")
 
-
-class UserSchema(Schema):
-    email = fields.String()
-    password = fields.String()
-    name = fields.String()
-    surname = fields.String()
-    favorite_genre = fields.Integer()
-
-
-class Favorites(models.Base):
-    __tablename__ = 'favorites'
-
-    user_id = Column(Integer, ForeignKey("user.id"), nullable=False, )
-    movie_id = Column(Integer, ForeignKey("movie.id"), nullable=False, )
-
-    users = relationship("User")
-    movies = relationship("Movie")
-
-
-class FavoritesSchema(Schema):
-    user_id = fields.Integer()
-    movie_id = fields.Integer()

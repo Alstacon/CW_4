@@ -12,3 +12,12 @@ class MethodNotAllowed(BaseServiceError):
 
 class UnsuitableData(BaseServiceError):
     code = 405
+
+
+class AlreadyExists(BaseServiceError):
+    code = 303
+
+
+class CondlictError(BaseServiceError):
+    code = 409
+

@@ -1,3 +1,4 @@
+from sqlite3 import IntegrityError
 from typing import Generic, List, Optional, TypeVar
 
 from flask import current_app
@@ -5,6 +6,8 @@ from flask_sqlalchemy import BaseQuery
 from sqlalchemy import desc
 from sqlalchemy.orm import scoped_session
 from werkzeug.exceptions import NotFound
+
+from project.exceptions import CondlictError
 from project.setup.db.models import Base
 
 T = TypeVar('T', bound=Base)
@@ -50,11 +53,13 @@ class BaseDAO(Generic[T]):
         return stmt.all()
 
     def create(self, data):
-        entity = self.__model__(**data)
-        self._db_session.add(entity)
-        self._db_session.commit()
-        return entity
-
+        try:
+            entity = self.__model__(**data)
+            self._db_session.add(entity)
+            self._db_session.commit()
+            return entity
+        except IntegrityError:
+            raise CondlictError (f"""User with email {data.get("email")} is already registered""")
 
 
 

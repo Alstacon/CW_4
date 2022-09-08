@@ -1,7 +1,8 @@
 from flask_restx import Namespace, Resource
 
-from project.container import favorites_service
-from project.models import FavoritesSchema
+from project.container import user_service
+from project.setup.api.models import favorites_model
+
 from project.tools.decorators import auth_required
 
 api = Namespace('favorites')
@@ -11,26 +12,20 @@ api = Namespace('favorites')
 class FavoritesView(Resource):
     @auth_required
     def post(self, user, movie_id):
-        data = {
-            "user_id": user.id,
-            "movie_id": movie_id
-        }
-        favorites_service.add_to_favorites(data)
+        user_service.add_to_favorites(movie_id, user.id)
         return '', 201
 
     @auth_required
     def delete(self, user, movie_id):
-        data = {
-            "user_id": user.id,
-            "movie_id": movie_id
-        }
-        favorites_service.delete_from_favorites(data)
+        user_service.delete_from_favorites(movie_id, user.id)
         return '', 204
 
     @api.route('/movies/')
+    @api.response(code=401, description='Unauthorized')
+    @api.response(code=403, description='Forbidden')
     class FavoritesView(Resource):
         @auth_required
+        @api.marshal_with(favorites_model, code=200)
         def get(self, user):
-            favorites = favorites_service.get_all(user.id)
-            response = FavoritesSchema().dump(favorites)
-            return response, 200
+            return user_service.get_favorites(user.id)
+

@@ -41,7 +41,7 @@ def generate_tokens_func(user):
         "password": user.password,
         "name": user.name,
         "surname": user.surname,
-        "favorite_genre": user.favorite_genre
+        "favorite_film": user.favorite_film
     }
 
     min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
