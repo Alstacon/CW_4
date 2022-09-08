@@ -1,4 +1,3 @@
-from sqlite3 import IntegrityError
 from typing import Generic, List, Optional, TypeVar
 
 from flask import current_app
@@ -58,8 +57,8 @@ class BaseDAO(Generic[T]):
             self._db_session.add(entity)
             self._db_session.commit()
             return entity
-        except IntegrityError:
-            raise CondlictError (f"""User with email {data.get("email")} is already registered""")
+        except Exception:
+            raise CondlictError(f"""User with email {data.get("email")} is already registered""")
 
 
 

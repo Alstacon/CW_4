@@ -3,6 +3,7 @@ from flask_restx import Namespace, Resource
 
 from project.container import auth_service
 from project.setup.api.models import user_model
+from project.setup.api.parsers import auth_parser
 
 api = Namespace('auth')
 
@@ -32,7 +33,8 @@ class AuthView(Resource):
 class AuthView(Resource):
     def post(self):
         """Create new user in db"""
-        data = request.json
+        data = auth_parser.parse_args()
+
         auth_service.create_user(data)
 
         return '', 201

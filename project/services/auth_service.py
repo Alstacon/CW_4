@@ -1,5 +1,6 @@
 import calendar
 import datetime
+from typing import Optional
 
 import jwt
 
@@ -17,10 +18,7 @@ class AuthService:
         self.user_service = users_service
 
     def create_user(self, data):
-        try:
-            self.user_service.create_user(data)
-        except:
-            return f"""User with email {data.get("email")} is already registered"""
+        self.user_service.create_user(data)
 
     def generate_tokens(self, data, is_refresh=False):
         user = self.user_service.get_item(data.get("email"))
