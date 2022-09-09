@@ -1,5 +1,9 @@
+from typing import Optional
+
+from werkzeug.exceptions import NotFound
+
 from project.dao.base import BaseDAO
-from project.models import Genre, Director, Movie, User, Favorites
+from project.models import Genre, Director, Movie, User, favorites
 
 
 class GenresDAO(BaseDAO[Genre]):
@@ -21,15 +25,29 @@ class UsersDAO(BaseDAO[User]):
         self._db_session.add(user)
         self._db_session.commit()
 
-    def delete_from_favorites(self, movie_id: int, user_id: int) -> None:
-        movie = self._db_session.query(Favorites).filter_by(user_id=user_id, movie_id=movie_id).first()
-        self._db_session.delete(movie)
-        self._db_session.commit()
+    def delete_from_favorites(self, movie_id: int, user_id: int) -> None| bool:
+        if user := self.get_by_id(user_id):
+            movie = self._db_session.query(Movie).get_or_404(movie_id)
 
-    def add_to_favorites(self, movie_id: int, user_id: str) -> None:
-        new_user_movie = Favorites(user_id=user_id, movie_id=movie_id)
-        self._db_session.add(new_user_movie)
-        self._db_session.commit()
+            user.favorites.remove(movie)
+            self._db_session.commit()
+            return True
+        return False
 
-    def get_favorites(self, user_id: int) -> list[Movie]:
-        return self._db_session.query(Movie).join(Favorites).filter_by(user_id=user_id).all()
+    def add_to_favorites(self, movie_id: int, user_id: int) -> None | bool:
+        if user := self.get_by_id(user_id):
+            movie = self._db_session.query(Movie).get_or_404(movie_id)
+
+            user.favorites.append(movie)
+            self._db_session.commit()
+            return True
+        return False
+
+    def get_favorites(self, user_id: int, page: Optional[int] = None) -> list[Movie]:
+        user = self.get_by_id(user_id)
+        if page:
+            try:
+                return user.favorites(page, self._items_per_page).items
+            except NotFound:
+                return []
+        return user.favorites

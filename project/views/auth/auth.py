@@ -2,7 +2,7 @@ from flask import request, abort
 from flask_restx import Namespace, Resource
 
 from project.container import auth_service
-from project.setup.api.models import user_model
+from project.setup.api.models import tokens_model
 from project.setup.api.parsers import auth_parser
 
 api = Namespace('auth')
@@ -10,31 +10,29 @@ api = Namespace('auth')
 
 @api.route('/login/')
 class AuthView(Resource):
+
+    @api.response(code=400, description='Bad request')
+    @api.marshal_with(tokens_model, code=200, description='Tokens generated')
     def post(self):
         """Login user"""
-        data = request.json
+        tokens = auth_service.generate_tokens(request.json)
+        return tokens
 
-        if None in data:
-            abort(400)
-
-        tokens = auth_service.generate_tokens(data)
-        return tokens, 201
-
+    @api.response(code=401, description='Invalid refresh token')
+    @api.marshal_with(tokens_model, code=200, description='Tokens updated')
     def put(self):
         data = request.json
-        refresh_token = data.get('refresh_token')
-        if refresh_token is None:
-            abort(401)
-        tokens = auth_service.approve_refresh_token(refresh_token)
-        return tokens, 201
+        tokens = auth_service.approve_refresh_token(data.get('refresh_token'))
+        return tokens
 
 
 @api.route('/register/')
 class AuthView(Resource):
+
+    @api.expect(auth_parser)
     def post(self):
         """Create new user in db"""
-        data = auth_parser.parse_args()
 
-        auth_service.create_user(data)
+        auth_service.create_user(auth_parser.parse_args())
 
-        return '', 201
+        return '', 200

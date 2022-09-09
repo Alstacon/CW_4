@@ -25,6 +25,12 @@ movie_model: Model = api.model('Фильм', {
     'director': fields.Nested(director_model)
 })
 
+favorites_model = api.model('Избранное', {
+        'user_id': fields.Integer(required=True, example=1),
+        'movie_id': fields.Integer(required=True, example=1),
+    }
+)
+
 user_model: Model = api.model('Пользователь', {
     'id': fields.Integer(required=True, example=1),
     'email': fields.String(required=True, example="email"),
@@ -34,8 +40,8 @@ user_model: Model = api.model('Пользователь', {
     'favorites': fields.Nested(movie_model)
 })
 
-favorites_model = api.model('Избранное', {
-        'user_id': fields.Integer(required=True, example=1),
-        'movie_id': fields.String(required=True, example=1),
-    }
-)
+
+tokens_model: Model = api.model( 'Токены', {
+    'access_token': fields.String(required=True, example='eyJ0UzI1NiJ9.eyJpwijYyNzIwNzM3fQ.r-FJx1OFp1pDSmwc4lRM'),
+    'refresh_token': fields.String(required=True, example='eyJ0UzI1NiJ9.eyJpwijYyNzIwNzM3fQ.r-FJx1OFp1pDSmwcikhM')
+})

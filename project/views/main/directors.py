@@ -20,7 +20,7 @@ class DirectorsView(Resource):
 
 @api.route('/<int:director_id>/')
 class DirectorView(Resource):
-    @api.response(404, 'Not Found')
+    @api.response(code=404, description='Not Found')
     @api.marshal_with(director_model, code=200, description='OK')
     def get(self, director_id: int):
         """

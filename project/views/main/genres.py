@@ -20,7 +20,7 @@ class GenresView(Resource):
 
 @api.route('/<int:genre_id>/')
 class GenreView(Resource):
-    @api.response(404, 'Not Found')
+    @api.response(code=404, description='Not Found')
     @api.marshal_with(genre_model, code=200, description='OK')
     def get(self, genre_id: int):
         """

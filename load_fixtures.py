@@ -3,8 +3,8 @@ from typing import Any, Dict, List, Type
 
 from sqlalchemy.exc import IntegrityError
 
-from project.config import config
-from project.models import Genre, Movie, Director, User
+from project.config import config, TestingConfig
+from project.models import Genre, Movie, Director
 from project.server import create_app
 from project.setup.db import db, models
 from project.utils import read_json

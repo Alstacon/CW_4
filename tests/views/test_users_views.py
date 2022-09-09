@@ -13,7 +13,7 @@ class TestUsersView:
 
     @pytest.fixture
     def user_1(self, db, create_auth_user):
-        user, token = create_auth_user(1, "email")
+        user, token = create_auth_user(1, "email@mail.ru")
         db.session.add(user)
         db.session.commit()
         return user
@@ -34,7 +34,7 @@ class TestUsersView:
         response = client.patch('/user/', data=json.dumps(data),
                                 headers={'Content-Type': 'application/json',
                                          'Authorization': token})
-        assert response.status_code == 204
+        assert response.status_code == 200
 
         response = client.patch('/user/')
 
@@ -42,8 +42,9 @@ class TestUsersView:
 
     def test_update_password_page(self, client, token, user_with_pass):
         data = {"old_password": "password", "new_password": "pass"}
+        user_service.get_by_id = MagicMock(return_value=user_with_pass)
         response = client.put('/user/password/', data=json.dumps(data),
                               headers={'Content-Type': 'application/json',
                                        'Authorization': token})
 
-        assert response.status_code == 204
+        assert response.status_code == 200

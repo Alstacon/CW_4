@@ -16,24 +16,24 @@ class TestAuthView:
         return token["refresh_token"]
 
     def test_register_page(self, client, user_with_pass):
-        data = {"email": "email", "password": "password"}
+        data = {"email": "email@mail.ru", "password": "password"}
         auth_service.create_user = MagicMock(return_value=user_with_pass)
         response = client.post('/auth/register/', data=json.dumps(data),
                                headers={"Content-Type": "application/json"})
 
-        assert response.status_code == 201
+        assert response.status_code == 200
 
     def test_login_page(self, client):
-        data = {"email": "email", "password": "password"}
+        data = {"email": "email@mail.ru", "password": "password"}
         auth_service.generate_tokens = MagicMock(return_value={1: 1, 2: 2})
         response = client.post('/auth/login/', data=json.dumps(data),
                                headers={"Content-Type": "application/json"})
 
-        assert response.status_code == 201
+        assert response.status_code == 200
 
     def test_refresh_page(self, client, refresh_token):
         data = {"refresh_token": refresh_token}
         response = client.put('/auth/login/', data=json.dumps(data),
                               headers={"Content-Type": "application/json"})
 
-        assert response.status_code == 201
+        assert response.status_code == 200

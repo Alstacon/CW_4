@@ -29,9 +29,10 @@ class UserView(Resource):
         return ""
 
 
+@api.doc(security='Bearer')
 @api.route('/password/')
 class UserPassChangeView(Resource):
-    @api.marshal_with(user_model, code=204)
+    @api.marshal_with(user_model, code=200)
     @auth_required
     def put(self, user):
         data = request.json

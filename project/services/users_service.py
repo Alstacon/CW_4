@@ -13,6 +13,10 @@ class UsersService:
         self.dao = dao
         self.user_dao = user_dao
 
+    def get_by_id(self, user_id: int):
+        user = self.dao.get_by_id(user_id)
+        return user
+
     def get_item(self, email: str) -> User:
         if user := self.dao.get_by_email(email):
             return user
@@ -43,7 +47,7 @@ class UsersService:
         return self.user_dao.update(user)
 
     def update_password(self, user, old_password, new_password):
-        user = self.user_dao.get_by_email(user.email)
+        user = self.get_by_id(user.id)
         if compare_passwords(user.password, old_password):
             user.password = generate_password_hash(new_password)
             return self.user_dao.update(user)
