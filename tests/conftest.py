@@ -80,17 +80,19 @@ def add_movies(db):
         genre_id=1,
         director_id=2
     )
-    # movie1 = Movie(
-    #     id=2,
-    #     title="Исчезнувшая",
-    #     description="Desc",
-    #     trailer="link",
-    #     year=2017,
-    #     rating=5.0,
-    #     genre_id=1,
-    #     director_id=2
-    # )
+    movie1 = Movie(
+        id=2,
+        title="Исчезнувшая",
+        description="Desc",
+        trailer="link",
+        year=2017,
+        rating=5.0,
+        genre_id=1,
+        director_id=2
+    )
     db.session.add(movie)
+    db.session.add(movie1)
     db.session.commit()
-    return movie
+    return movie, movie1
+
 
