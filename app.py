@@ -1,3 +1,5 @@
+from flask_migrate import Migrate
+
 from project.config import config
 from project.models import Genre, Movie, Director, User
 from project.server import create_app, db

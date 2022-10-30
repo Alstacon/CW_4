@@ -1,9 +1,24 @@
-FROM node:12-alpine as build
-WORKDIR /app
-COPY . /app
-RUN npm install && npm run build
+FROM python:3.10-slim
 
-FROM nginx:1.16.0-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /opt/movies
+
+ENV FLASK_APP=app \
+    FLASK_ENV=production
+
+
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends curl \
+    && apt-get autoclean && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /vat/tmp/*
+
+COPY requirements.txt .
+
+RUN python3 -m pip install -r requirements.txt
+
+COPY . .
+
+ENTRYPOINT ["bash", "entrypoint.sh"]
+
+EXPOSE 5000
+
+CMD ["flask", "run", "-h", "0.0.0.0", "-p", "5000"]

@@ -17,14 +17,14 @@ python create_tables.py
 ```shell
 python load_fixtures.py
 ```
-Скрпит читает файл fixtures.json и загружает данные в базу. Если данные уже загружены - выводит соответсвующее сообщение. 
+Скрипт читает файл fixtures.json и загружает данные в базу. Если данные уже загружены - выводит соответсвующее сообщение. 
 
 ## Запуск проекта
 
 ### Bash (Linux/MACOS)
 ```shell
-export FLASK_APP=run.py
-export FLASK_ENV='development'
+export FLASK_APP=app.py
+export FLASK_ENV='production'
 flask run
 ```
 

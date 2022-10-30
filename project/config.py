@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from typing import Type
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -39,11 +40,17 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-    # TODO: дополнить конфиг
+    SQLALCHEMY_DATABASE_URI = "postgresql://{username}:{password}@{host}:{port}/{db_name}".format(
+        username=os.getenv('POSTGRES_USER'),
+        password=os.getenv('POSTGRES_PASSWORD'),
+        host=os.getenv('POSTGRES_HOST', '127.0.0.1'),
+        port=int(os.getenv('POSTGRES_PORT', 5432)),
+        db_name=os.getenv('POSTGRES_DB')
+    )
 
 
 class ConfigFactory:
-    flask_env = os.getenv('FLASK_ENV', 'development')
+    flask_env = os.getenv('FLASK_ENV', 'production')
 
     @classmethod
     def get_config(cls) -> Type[BaseConfig]:
