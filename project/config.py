@@ -3,8 +3,10 @@ import os
 from pathlib import Path
 from typing import Type
 
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
 
 
 class BaseConfig:
@@ -50,7 +52,7 @@ class ProductionConfig(BaseConfig):
 
 
 class ConfigFactory:
-    flask_env = os.getenv('FLASK_ENV', 'production')
+    flask_env = os.getenv('FLASK_ENV')
 
     @classmethod
     def get_config(cls) -> Type[BaseConfig]:

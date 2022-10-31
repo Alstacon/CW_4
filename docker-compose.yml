@@ -21,6 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: alstacon/skypro_film
     restart: always
     env_file:
       - ./.env
@@ -31,24 +32,25 @@ services:
     depends_on:
       db:
         condition: service_healthy
-#      migrations:
-#        condition: service_completed_successfully
+      migrations:
+        condition: service_completed_successfully
     healthcheck:
       test: curl -sS http://127.0.0.1:5000/ping/ || exit 1
       interval: 15s
       timeout: 5s
       retries: 5
 
-#  migrations:
-#    build:
-#      context: .
-#    volumes:
-#      - ./project/config.py:/opt/movies/config.py
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#    command:
-#      - flask db upgrade
+  migrations:
+    build:
+      context: .
+    image: alstacon/skypro_film
+    volumes:
+      - ./project/config.py:/opt/movies/config.py
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - flask db upgrade
 
 
 volumes:
