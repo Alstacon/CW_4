@@ -1,5 +1,7 @@
-## Курсовая работа №4. 
-### Kinopoisk:
+### 🍿 MovieCon —
+This is a web application, an interactive searchable movie database with the ability to add movies, genres or directors to favorites. 
+
+## Tech stack:
   - Flask
   - SQLAlchemy
   - Marshmallow
@@ -24,24 +26,6 @@
     Для всех объектов реализована пагинация.
 
 
-
-- Установка зависимостей
-```shell
-pip install -r requirements.txt
-
-pip install -r requirements.dev.txt
-```
-
-- Создание моделей (очистит БД и создаст все модели, указанные в импорте)
-```shell
-python create_tables.py
-```
-
-- Загрузка данных в базу
-```shell
-python load_fixtures.py
-```
-Скрипт читает файл fixtures.json и загружает данные в базу. Если данные уже загружены - выводит соответсвующее сообщение. 
 
 ## Usage:
 1) Clone the repository
