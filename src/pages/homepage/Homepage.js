@@ -34,8 +34,8 @@ export const Homepage = () => {
   return (
     <div className={styles.Homepage}>
       <Header
-        title="Sky movies"
-        subtitle="Кино в кармашке"
+        title="MovieCon"
+        subtitle="Почти все фильмы планеты"
       />
 
       <div className={styles.Homepage__movieSet}>

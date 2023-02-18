@@ -42,7 +42,10 @@ services:
       retries: 5
 
   front:
-    image: alstacon/skypro_film_front:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_front
+    image: alstacon/skypro_film_front
     ports:
       - "80:80"
     depends_on:

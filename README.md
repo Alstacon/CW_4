@@ -43,31 +43,8 @@ python load_fixtures.py
 ```
 Скрипт читает файл fixtures.json и загружает данные в базу. Если данные уже загружены - выводит соответсвующее сообщение. 
 
-## Запуск проекта
-
-### Bash (Linux/MACOS)
-```shell
-export FLASK_APP=app.py
-export FLASK_ENV='production'
-flask run
-```
-
-### CMD (Windows)
-```shell
-set FLASK_APP=run.py
-set FLASK_ENV=development
-flask run
-```
-
-### PowerShell (Windows)
-```shell
-$env:FLASK_APP = "run"
-$env:FLASK_ENV = "development"
-flask run
-```
-
-## Запуск тестов
-```shell
-pytest .
-```
-
+## Usage:
+1) Clone the repository
+`git clone https://github.com/Alstacon/ToDoCon.git`.
+2) Change `.env.example`'s file name for `.env` and fill it with valid parameters.
+3) Run docker `docker-compose up --build -d`.
