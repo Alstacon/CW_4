@@ -30,9 +30,6 @@ jobs:
           DB_USER=postgres
           DB_PASSWORD=password
           DB_NAME=postgres
-          SECRET_KEY=123
-          HASH_SALT=NBVCC
-          FLASK_ENV=testing
         run: pytest --cov=./ --cov-report=xml
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
