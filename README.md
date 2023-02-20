@@ -1,32 +1,30 @@
+![logo](./readme_assets/logo.svg)
 ### 🍿 MovieCon —
 This is a web application, an interactive searchable movie database with the ability to add movies, genres or directors to favorites. 
-
+___
 ## Tech stack:
-  - Flask
-  - SQLAlchemy
-  - Marshmallow
-  - REST
-  - CRUD
-  - JWT
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)&nbsp;&nbsp;
+![Postgres](https://img.shields.io/badge/postgres-FFD400?style=for-the-badge&logo=postgresql&logoColor=black)&nbsp;&nbsp;
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)&nbsp;&nbsp;
+![SQLAlchemy](https://img.shields.io/badge/-SQLAlchemy-FFD400?style=for-the-badge&logo=alchemy&logoColor=000000)&nbsp;&nbsp;
+![Docker](https://img.shields.io/badge/docker-000000?style=for-the-badge&logo=docker&logoColor=white)
 
-### **Пользователи**
+___
+### **👀 User**
     
-    У каждого пользователя есть страница с его профилем, где он сможет выбрать любимый жанр, указать имя и фамилию, а также в случае необходимости сменить пароль.
+    Each user has a profile page where they can choose their favorite genre, specify their first and last name, and change their password if necessary.    
     
-    Реализован механизм добавления и удаления фильмов в/из закладок, а также просмотр всех сохраненных в закладки фильмов.
-
-### **Аутентификация**
+    Implemented a mechanism for adding and removing movies to/from bookmarks, as well as viewing all movies saved to bookmarks.
+### **🔑 Authentication**
     
-    Для того чтобы у каждого пользователя была возможность добавлять понравившиеся фильмы в закладки для просмотра позже реализованы страницы с регистрацией и аутентификацией на основе JWT.
-
-### **Фильмы, режиссеры, жанры**
+    In order for each user to have the opportunity to bookmark their favorite movies for viewing later, JWT-based registration and authentication pages are implemented.
+### **🎬 Films, directors, genres**
     
-    Для фильмов, режиссеров и жанров реализована возможность чтения (get-запросы).
+    For films, directors and genres, the ability to read is implemented.    
     
-    Для всех объектов реализована пагинация.
+    Pagination is implemented for all objects.
 
-
-
+___
 ## Usage:
 1) Clone the repository
 `git clone https://github.com/Alstacon/ToDoCon.git`.
