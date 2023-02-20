@@ -1,4 +1,4 @@
 #!/bin/bash
-python create_tables.py
-python load_fixtures.py
+python3 create_tables.py
+python3 load_fixtures.py
 exec "$@"

@@ -27,31 +27,30 @@ services:
       - ./.env
     environment:
       POSTGRES_HOST: db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "80:5000"
+      - "5000:5000"
     depends_on:
       db:
         condition: service_healthy
-      migrations:
-        condition: service_completed_successfully
     healthcheck:
-      test: curl -sS http://127.0.0.1:5000/ping/ || exit 1
+      test: curl -sS http://172.0.0.1:5000/ping/ || exit 1
       interval: 15s
       timeout: 5s
       retries: 5
 
-  migrations:
+  front:
     build:
       context: .
-    image: alstacon/skypro_film
-    volumes:
-      - ./project/config.py:/opt/movies/config.py
+      dockerfile: Dockerfile_front
+    image: alstacon/skypro_film_front
+    ports:
+      - "80:80"
     depends_on:
       db:
         condition: service_healthy
-    command:
-      - flask db upgrade
-
 
 volumes:
   pg_data_flask:

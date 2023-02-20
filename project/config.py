@@ -31,7 +31,13 @@ class BaseConfig:
 
 class TestingConfig(BaseConfig):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
+    DATABASE_URI = "postgresql://{username}:{password}@{host}:{port}/{db_name}".format(
+        username=os.getenv('POSTGRES_USER'),
+        password=os.getenv('POSTGRES_PASSWORD'),
+        host=os.getenv('POSTGRES_HOST', '127.0.0.1'),
+        port=int(os.getenv('POSTGRES_PORT', 5432)),
+        db_name=os.getenv('POSTGRES_DB')
+    )
 
 
 class DevelopmentConfig(BaseConfig):
@@ -42,7 +48,7 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = "postgresql://{username}:{password}@{host}:{port}/{db_name}".format(
+    DATABASE_URI = "postgresql://{username}:{password}@{host}:{port}/{db_name}".format(
         username=os.getenv('POSTGRES_USER'),
         password=os.getenv('POSTGRES_PASSWORD'),
         host=os.getenv('POSTGRES_HOST', '127.0.0.1'),
