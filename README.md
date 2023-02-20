@@ -1,4 +1,6 @@
 ![logo](./readme_assets/logo.svg)
+<a href="https://codecov.io/gh/Alstacon/MovieCon" > <img src="https://img.shields.io/codecov/c/github/Alstacon/MovieCon?color=FFD400&style=plastic"></a>
+
 ### 🍿 MovieCon —
 This is a web application, an interactive searchable movie database with the ability to add movies, genres or directors to favorites. 
 ___
