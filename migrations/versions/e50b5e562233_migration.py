@@ -1,7 +1,7 @@
 """migration.
 
 Revision ID: e50b5e562233
-Revises: 
+Revises:
 Create Date: 2022-10-30 18:58:15.977481
 
 """

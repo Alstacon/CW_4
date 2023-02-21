@@ -12,14 +12,14 @@ class TestUsersDAO:
 
     @pytest.fixture
     def user_1(self, db):
-        u = User(id=1, email="email", password="password")
+        u = User(id=1, email='email', password='password')
         db.session.add(u)
         db.session.commit()
         return u
 
     @pytest.fixture()
     def user_2(self, db):
-        u = User(id=2, email="liame", password="drowssap")
+        u = User(id=2, email='liame', password='drowssap')
         db.session.add(u)
         db.session.commit()
         return u
@@ -35,14 +35,13 @@ class TestUsersDAO:
 
     def test_create_user(self, users_dao):
         user = {
-            "email": "imail",
-            "password": "parol"
+            'email': 'imail',
+            'password': 'parol'
         }
         new_user = users_dao.create(user)
-        assert new_user.email == user.get("email")
+        assert new_user.email == user.get('email')
 
     def test_update_user(self, user_1, users_dao):
-        user_1["email"] = "EMAIL"
+        user_1['email'] = 'EMAIL'
         users_dao.update(user_1)
-        assert user_1.email != "email"
-
+        assert user_1.email != 'email'

@@ -3,7 +3,7 @@ from typing import Optional
 from werkzeug.exceptions import NotFound
 
 from project.dao.base import BaseDAO
-from project.models import Genre, Director, Movie, User, favorites
+from project.models import Genre, Director, Movie, User
 
 
 class GenresDAO(BaseDAO[Genre]):
@@ -25,7 +25,7 @@ class UsersDAO(BaseDAO[User]):
         self._db_session.add(user)
         self._db_session.commit()
 
-    def delete_from_favorites(self, movie_id: int, user_id: int) -> None| bool:
+    def delete_from_favorites(self, movie_id: int, user_id: int) -> None | bool:
         if user := self.get_by_id(user_id):
             movie = self._db_session.query(Movie).get_or_404(movie_id)
 

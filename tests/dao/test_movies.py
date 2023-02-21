@@ -12,8 +12,8 @@ class TestMoviesDAO:
 
     @pytest.fixture
     def movie_1(self, db):
-        m = Movie(title="Ночные звери", description="Desc",
-                  trailer="link",
+        m = Movie(title='Ночные звери', description='Desc',
+                  trailer='link',
                   year=2016,
                   rating=5.0,
                   genre_id=1,
@@ -25,9 +25,9 @@ class TestMoviesDAO:
 
     @pytest.fixture
     def movie_2(self, db):
-        m = Movie(title="Исчезнувшая",
-                  description="Desc",
-                  trailer="link",
+        m = Movie(title='Исчезнувшая',
+                  description='Desc',
+                  trailer='link',
                   year=2017,
                   rating=5.0,
                   genre_id=1,
@@ -39,9 +39,9 @@ class TestMoviesDAO:
 
     @pytest.fixture
     def movie_3(self, db):
-        m = Movie(title="Элизабеттаун",
-                  description="Desc",
-                  trailer="link",
+        m = Movie(title='Элизабеттаун',
+                  description='Desc',
+                  trailer='link',
                   year=2005,
                   rating=5.0,
                   genre_id=1,
@@ -61,20 +61,20 @@ class TestMoviesDAO:
         assert movies_dao.get_all() == [movie_1, movie_2]
 
     def test_get_all_movies_sorted_by_year(self, app, movies_dao, movie_1, movie_2, movie_3):
-        app.config["ITEMS_PER_PAGE"] = 2
+        app.config['ITEMS_PER_PAGE'] = 2
         assert movies_dao.get_all_sorted_by_year(page=1) == [movie_2, movie_1]
         assert movies_dao.get_all_sorted_by_year(page=2) == [movie_3]
         assert movies_dao.get_all_sorted_by_year(page=3) == []
 
     def test_movie_create(self, movies_dao):
-        movie = {"id": 4,
-                 "title": "Снеговик",
-                 "description": "Desc",
-                 "trailer": "link",
-                 "year": 2017,
-                 "rating": 5.0,
-                 "genre_id": 1,
-                 "director_id": 2
+        movie = {'id': 4,
+                 'title': 'Снеговик',
+                 'description': 'Desc',
+                 'trailer': 'link',
+                 'year': 2017,
+                 'rating': 5.0,
+                 'genre_id': 1,
+                 'director_id': 2
                  }
         new_movie = movies_dao.create(movie)
-        assert new_movie.title == movie.get("title")
+        assert new_movie.title == movie.get('title')

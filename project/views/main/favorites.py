@@ -7,11 +7,12 @@ from project.tools.decorators import auth_required
 
 api = Namespace('favorites')
 
+
 @api.doc(security='Bearer')
 @api.response(code=201, description='Created')
 @api.response(code=204, description='Deleted')
 @api.route('/movies/<int:movie_id>/')
-class FavoritesView(Resource):
+class FavoriteView(Resource):
     @auth_required
     def post(self, user, movie_id):
         user_service.add_to_favorites(movie_id, user.id)
@@ -32,4 +33,3 @@ class FavoritesView(Resource):
     @api.marshal_with(movie_model, code=200)
     def get(self, user):
         return user_service.get_favorites(user.id)
-

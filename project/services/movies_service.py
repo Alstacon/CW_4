@@ -18,7 +18,3 @@ class MoviesService:
         if status:
             return self.dao.get_all_sorted_by_year(page=page)
         return self.dao.get_all(page=page)
-
-
-
-

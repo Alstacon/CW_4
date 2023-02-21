@@ -12,14 +12,14 @@ class TestGenresDAO:
 
     @pytest.fixture
     def genre_1(self, db):
-        g = Genre(name="Боевик")
+        g = Genre(name='Боевик')
         db.session.add(g)
         db.session.commit()
         return g
 
     @pytest.fixture
     def genre_2(self, db):
-        g = Genre(name="Комедия")
+        g = Genre(name='Комедия')
         db.session.add(g)
         db.session.commit()
         return g

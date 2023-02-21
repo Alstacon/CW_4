@@ -13,26 +13,26 @@ class TestMoviesService:
     @patch('project.dao.MoviesDAO')
     def movies_dao_mock(self, dao_mock):
         dao = dao_mock()
-        dao.get_by_id.return_value = Movie(title="Test_movie_1",
-                                           description="Desc",
-                                           trailer="link",
+        dao.get_by_id.return_value = Movie(title='Test_movie_1',
+                                           description='Desc',
+                                           trailer='link',
                                            year=2017,
                                            rating=5.0,
                                            genre_id=1,
                                            director_id=2
                                            )
         dao.get_all.return_value = [
-            Movie(title="Test_movie_1",
-                  description="Desc",
-                  trailer="link",
+            Movie(title='Test_movie_1',
+                  description='Desc',
+                  trailer='link',
                   year=2017,
                   rating=5.0,
                   genre_id=1,
                   director_id=2
                   ),
-            Movie(title="Test_movie_2",
-                  description="Desc",
-                  trailer="link",
+            Movie(title='Test_movie_2',
+                  description='Desc',
+                  trailer='link',
                   year=2000,
                   rating=25.0,
                   genre_id=14,
@@ -48,9 +48,9 @@ class TestMoviesService:
 
     @pytest.fixture
     def movie(self, db):
-        m = Movie(title="Test_movie_3",
-                  description="Desc",
-                  trailer="link",
+        m = Movie(title='Test_movie_3',
+                  description='Desc',
+                  trailer='link',
                   year=1998,
                   rating=3.0,
                   genre_id=12,
@@ -75,4 +75,3 @@ class TestMoviesService:
         assert len(movies) == 2
         assert movies == movies_dao_mock.get_all.return_value
         movies_dao_mock.get_all.assert_called_with(page=page)
-

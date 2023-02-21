@@ -12,10 +12,10 @@ from project.config import BaseConfig
 
 def __generate_password_digest(password: str) -> bytes:
     return hashlib.pbkdf2_hmac(
-        hash_name="sha256",
-        password=password.encode("utf-8"),
-        salt=current_app.config["PWD_HASH_SALT"],
-        iterations=current_app.config["PWD_HASH_ITERATIONS"],
+        hash_name='sha256',
+        password=password.encode('utf-8'),
+        salt=current_app.config['PWD_HASH_SALT'],
+        iterations=current_app.config['PWD_HASH_ITERATIONS'],
     )
 
 
@@ -34,14 +34,15 @@ def compare_passwords(hash_password, password) -> bool:
     )
     return hmac.compare_digest(decoded_hash, hash_digest)
 
+
 def generate_tokens_func(user):
     data = {
-        "id": user.id,
-        "email": user.email,
-        "password": user.password,
-        "name": user.name,
-        "surname": user.surname,
-        "favorite_film": user.favorite_film
+        'id': user.id,
+        'email': user.email,
+        'password': user.password,
+        'name': user.name,
+        'surname': user.surname,
+        'favorite_film': user.favorite_film
     }
 
     min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)

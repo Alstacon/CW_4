@@ -12,14 +12,14 @@ class TestDirectorsDAO:
 
     @pytest.fixture
     def director_1(self, db):
-        d = Director(name="Тимур Бекмамбетов")
+        d = Director(name='Тимур Бекмамбетов')
         db.session.add(d)
         db.session.commit()
         return d
 
     @pytest.fixture
     def director_2(self, db):
-        d = Director(name="Дэвид Финчер")
+        d = Director(name='Дэвид Финчер')
         db.session.add(d)
         db.session.commit()
         return d

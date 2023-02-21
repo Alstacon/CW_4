@@ -26,22 +26,21 @@ movie_model: Model = api.model('Фильм', {
 })
 
 favorites_model = api.model('Избранное', {
-        'user_id': fields.Integer(required=True, example=1),
-        'movie_id': fields.Integer(required=True, example=1),
-    }
-)
+    'user_id': fields.Integer(required=True, example=1),
+    'movie_id': fields.Integer(required=True, example=1),
+}
+                            )
 
 user_model: Model = api.model('Пользователь', {
     'id': fields.Integer(required=True, example=1),
-    'email': fields.String(required=True, example="email"),
-    'password': fields.String(required=True, example="password"),
+    'email': fields.String(required=True, example='email'),
+    'password': fields.String(required=True, example='password'),
     'name': fields.String(required=True, example='name'),
     'surname': fields.String(required=True, example='surname'),
     'favorites': fields.Nested(movie_model)
 })
 
-
-tokens_model: Model = api.model( 'Токены', {
+tokens_model: Model = api.model('Токены', {
     'access_token': fields.String(required=True, example='eyJ0UzI1NiJ9.eyJpwijYyNzIwNzM3fQ.r-FJx1OFp1pDSmwc4lRM'),
     'refresh_token': fields.String(required=True, example='eyJ0UzI1NiJ9.eyJpwijYyNzIwNzM3fQ.r-FJx1OFp1pDSmwcikhM')
 })
