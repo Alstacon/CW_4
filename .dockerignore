@@ -7,3 +7,4 @@ venv
 .env
 README.md
 deploy
+.pre-commit-config.yaml

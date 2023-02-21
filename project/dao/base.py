@@ -31,7 +31,6 @@ class BaseDAO(Generic[T]):
     def get_by_user_id(self, user_id):
         return self._db_session.query(self.__model__).filter(self.__model__.user_id == user_id).all()
 
-
     def get_all(self, page: Optional[int] = None) -> List[T]:
         stmt: BaseQuery = self._db_session.query(self.__model__)
         if page:
@@ -59,7 +58,3 @@ class BaseDAO(Generic[T]):
             return entity
         except Exception:
             raise CondlictError(f"""User with email {data.get("email")} is already registered""")
-
-
-
-

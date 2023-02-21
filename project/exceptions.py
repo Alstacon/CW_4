@@ -20,4 +20,3 @@ class AlreadyExists(BaseServiceError):
 
 class CondlictError(BaseServiceError):
     code = 409
-

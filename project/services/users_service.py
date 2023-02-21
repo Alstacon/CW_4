@@ -1,5 +1,3 @@
-from typing import Optional
-
 from project.tools.security import compare_passwords
 from project.dao.base import BaseDAO
 from project.dao.main import UsersDAO
@@ -35,7 +33,6 @@ class UsersService:
     def get_favorites(self, user_id):
         return self.user_dao.get_favorites(user_id)
 
-
     def update(self, user, data: dict):
         user = self.user_dao.get_by_email(user.email)
         if 'name' in data:
@@ -51,7 +48,4 @@ class UsersService:
         if compare_passwords(user.password, old_password):
             user.password = generate_password_hash(new_password)
             return self.user_dao.update(user)
-        return "Неверный пароль"
-
-
-
+        return 'Неверный пароль'

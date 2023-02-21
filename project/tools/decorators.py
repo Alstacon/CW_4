@@ -16,8 +16,8 @@ def auth_required(func: Callable):
         token = request.headers['Authorization'].split('Bearer ')[-1]
         try:
             data = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=[BaseConfig.ALGORITHM])
-            user = User(id=data.get("id"), email=data.get("email"), password=data.get("password"),
-                        name=data.get("name"), surname=data.get("surname"), favorite_film=data.get("favorite_film"))
+            user = User(id=data.get('id'), email=data.get('email'), password=data.get('password'),
+                        name=data.get('name'), surname=data.get('surname'), favorite_film=data.get('favorite_film'))
         except Exception as e:
             print('JWT Decode exception', e)
             abort(401)
@@ -25,4 +25,3 @@ def auth_required(func: Callable):
         else:
             return func(*args, **kwargs, user=user)
     return wrapper
-

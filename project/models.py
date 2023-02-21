@@ -1,6 +1,4 @@
-from marshmallow import Schema, fields
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
-from sqlalchemy.orm import relationship
 
 from project.setup.db import models, db
 
@@ -10,7 +8,7 @@ class Genre(models.Base):
 
     name = Column(String(100), unique=True, nullable=False)
 
-    movies = db.relationship("Movie", back_populates='genre')
+    movies = db.relationship('Movie', back_populates='genre')
 
 
 class Director(models.Base):
@@ -18,7 +16,7 @@ class Director(models.Base):
 
     name = Column(String(100), unique=True, nullable=False)
 
-    movies = db.relationship("Movie", back_populates='director')
+    movies = db.relationship('Movie', back_populates='director')
 
 
 class Movie(models.Base):
@@ -32,8 +30,8 @@ class Movie(models.Base):
     genre_id = Column(Integer, ForeignKey(f'{Genre.__tablename__}.id'), nullable=False)
     director_id = Column(Integer, ForeignKey(f'{Director.__tablename__}.id'), nullable=False)
 
-    genre = db.relationship("Genre", back_populates='movies')
-    director = db.relationship("Director", back_populates='movies')
+    genre = db.relationship('Genre', back_populates='movies')
+    director = db.relationship('Director', back_populates='movies')
 
 
 # class Favorites(db.Model):

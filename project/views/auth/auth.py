@@ -1,4 +1,4 @@
-from flask import request, abort
+from flask import request
 from flask_restx import Namespace, Resource
 
 from project.container import auth_service
@@ -27,7 +27,7 @@ class AuthView(Resource):
 
 
 @api.route('/register/')
-class AuthView(Resource):
+class RegisterView(Resource):
 
     @api.expect(auth_parser)
     def post(self):
