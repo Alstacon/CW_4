@@ -31,6 +31,6 @@ ___
 ___
 ## Usage:
 1) Clone the repository
-`git clone https://github.com/Alstacon/ToDoCon.git`.
+`git clone https://github.com/Alstacon/MovieCon.git`.
 2) Change `.env.example`'s file name for `.env` and fill it with valid parameters.
 3) Run docker `docker-compose up --build -d`.
