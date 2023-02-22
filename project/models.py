@@ -34,16 +34,10 @@ class Movie(models.Base):
     director = db.relationship('Director', back_populates='movies')
 
 
-# class Favorites(db.Model):
-#     __tablename__ = 'favorites'
-#
-#     user_id = Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
-#     movie_id = Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True, nullable=False)
-
 favorites = db.Table(
     'favorites',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False),
-    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True, nullable=False)
+    db.Column('movie_id', db.Integer, db.ForeignKey(f'{Movie.__tablename__}.id'), primary_key=True, nullable=False)
 )
 
 
