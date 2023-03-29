@@ -42,6 +42,6 @@ class TestUsersDAO:
         assert new_user.email == user.get('email')
 
     def test_update_user(self, user_1, users_dao):
-        user_1['email'] = 'EMAIL'
+        user_1.email = 'EMAIL'
         users_dao.update(user_1)
         assert user_1.email != 'email'
